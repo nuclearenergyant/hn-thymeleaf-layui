@@ -1,0 +1,104 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script th:src="@{/js/jquery-1.10.2.js}"></script>
+        <script th:src="@{/layui/layui.all.js}"></script>
+        <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <!--查询表单-->
+        <form class="layui-form" action="" id="searchForm" style="margin:12px 12px;" lay-filter="searchForm">
+            <span class="">菜单名称：</span>
+            <div class="layui-inline">
+                <input type="text" id="menuName_s" name="menuName" lay-verify="title" autocomplete="off" placeholder="请输入名称" class="layui-input" style="width:300px;">
+            </div>
+            <span class="">菜单状态：</span>
+            <div class="layui-inline" style="width:300px;">
+                <label for="status_test"></label>
+                <select id="status_test" name="status">
+                    <option value=""></option>
+                    <option value="0">显示</option>
+                    <option value="1">隐藏</option>
+                </select>
+            </div>
+            <button id="searchBtn" style="margin-left:10px;" type="button" class="layui-btn layui-btn-radius"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button type="reset" class="layui-btn layui-btn-warm layui-btn-radius"><i class="layui-icon">&#xe669;</i>重置</button>
+        </form>
+        <!--行工具栏模板-->
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+        <!--菜单表格-->
+        <table id="demoTreeTb"></table>
+        <!--实例化tree table-->
+        <script src="/layui/layui.js"></script>
+        <script>
+
+            layui.config({
+                base: '/layui/lay/modules/'      //自定义layui组件的目录
+            }).extend({ //设定组件别名
+                treeTable:   'treeTable',
+            });
+            layui.use(['layer', 'util', 'treeTable'], function () {
+                var $ = layui.jquery;
+                var layer = layui.layer;
+                var util = layui.util;
+                var treeTable = layui.treeTable;
+                $('body').removeClass('layui-hide');
+
+               // 渲染表格
+                var insTb = treeTable.render({
+                    elem: '#demoTreeTb',
+                    url: '/menu/selectAllMenu',
+                    toolbar: 'default',
+                    height: 'full-200',
+                    treeColIndex: 2,//树形图标显示在第几列
+                    treeIdName: 'menuId',//id字段的名称
+                    treePidName: 'parentId',//pid字段的名称
+                    treeDefaultClose: false,//是否默认折叠
+                    treeLinkage: false,//父级展开时是否自动展开所有子级
+                  /*  tree: {
+                        // iconIndex: 2,
+                        // isPidData: true,
+                        // idName: 'menuId',
+                        // pidName: 'parentId',
+                        // childName: 'children'
+
+                        iconIndex: 2,           // 折叠图标显示在第几列
+                        isPidData: true,        // 是否是id、pid形式数据
+                        idName: 'menuId',  // id字段名称
+                        pidName: 'parentId'     // pid字段名称
+                    },*/
+                    defaultToolbar: ['filter', 'print', 'exports', {
+                        title: '提示',
+                        layEvent: 'LAYTABLE_TIPS',
+                        icon: 'layui-icon-tips'
+                    }],
+                    cols: [
+                        [
+                            {type: 'numbers'},
+                            {type: 'checkbox'},
+                            {field: 'menuId', title: 'ID', width:80, sort: true, fixed: 'left'}
+                            ,{field: 'menuName', title: '用户名', width:80}
+                            ,{field: 'url', title: '请求地址', width:200}
+                            ,{field: 'menuType', title: '类型', width:50}
+                            ,{field: 'visible', title: '可见', width:50}
+                            ,{field: 'perms', title: '权限', width:200}
+                            ,{ title: '操作', width:200, toolbar: '#barDemo'}
+                        ]
+                    ],
+                    style: 'margin-top:0;'
+                });
+
+            });
+        </script>
+    </body>
+
+</html>
