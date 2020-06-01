@@ -1,9 +1,9 @@
 package com.aaa.controller;
 
 import com.aaa.biz.UserBiz;
-import com.aaa.entity.LayUiTable;
-import com.aaa.entity.MyUserInfo;
-import com.aaa.entity.User;
+import com.aaa.biz.impl.DeptBizImpl;
+import com.aaa.biz.impl.UserBizImpl;
+import com.aaa.entity.*;
 import com.aaa.util.MyConstants;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
@@ -26,7 +26,10 @@ import java.util.*;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private UserBiz userBizImpl;
+    private UserBizImpl userBizImpl;
+
+    @Autowired
+    private DeptBizImpl deptBizImpl;
 
     @RequestMapping("/toShowUser")
     public String toShowUserLayui() {
@@ -62,6 +65,25 @@ public class UserController {
         return map;
     }
 
+    @RequestMapping("/showDept02")
+    @ResponseBody
+    public DeptTree showDept02() {
+        //开始查询
+        List<Dept> deptList = deptBizImpl.selectAllDept();
+        DeptTree layUiTable = new DeptTree();
+
+        //新建list
+        List<Dept> newlist=new ArrayList<Dept>();
+        layUiTable.setTitle("选择用户所属部门");
+        for (int i=0;deptList.size()>i;i++){
+            Dept dept=new Dept();
+            dept= deptList.get(i);
+            dept.setTitle(deptList.get(i).getDeptName());
+            newlist.add(dept);
+        }
+        layUiTable.setChildren(newlist);
+        return layUiTable;
+    }
     /**
      * 修改用户信息
      * @param userInfo

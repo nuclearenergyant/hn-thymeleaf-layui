@@ -48,10 +48,12 @@ public class UserInfoRealm extends AuthorizingRealm {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         MyUserInfo userInfo = userBiz.selectUserByUsername(usernamePasswordToken.getUsername());
         //System.out.println("userinfo:"+userInfo.getUsername()+"+"+userInfo.getPassword());
+
         //认证失败
         if(userInfo==null){
             return null;
         }
+
         //Object principal, Object credentials, String realmName
         //第二个参数是密码，数据库中的密码
 //        String sqlpassword=userInfo.getPassword();

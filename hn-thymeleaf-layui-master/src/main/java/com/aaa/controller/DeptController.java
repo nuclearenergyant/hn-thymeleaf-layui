@@ -1,16 +1,21 @@
 package com.aaa.controller;
 
 import com.aaa.biz.DeptBiz;
+import com.aaa.biz.impl.DeptBizImpl;
 import com.aaa.entity.Dept;
+import com.aaa.entity.DeptTree;
+import com.aaa.entity.Depttest;
 import com.aaa.entity.LayUiTable;
 import com.aaa.util.MyConstants;
 import com.alibaba.fastjson.JSON;
+import javafx.scene.DepthTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +24,7 @@ import java.util.Map;
 @RequestMapping("/dept")
 public class DeptController {
     @Autowired
-    private DeptBiz deptBizImpl;
+    private DeptBizImpl deptBizImpl;
 
     @RequestMapping("/toShowDept")
     public String  toShowDept(){
@@ -54,6 +59,26 @@ public class DeptController {
         layUiTable.setCode(0);
         layUiTable.setMsg("返回消息");
         layUiTable.setData(deptList);
+        return layUiTable;
+    }
+
+    @RequestMapping("/showDept02")
+    @ResponseBody
+    public  DeptTree showDept02() {
+        //开始查询
+        List<Dept> deptList = deptBizImpl.selectAllDept();
+        DeptTree layUiTable = new DeptTree();
+
+        //新建list
+        List<Dept> newlist=new ArrayList<Dept>();
+        layUiTable.setTitle("选择用户所属部门");
+        for (int i=0;deptList.size()>i;i++){
+            Dept dept=new Dept();
+            dept= deptList.get(i);
+            dept.setTitle(deptList.get(i).getDeptName());
+            newlist.add(dept);
+        }
+        layUiTable.setChildren(newlist);
         return layUiTable;
     }
 

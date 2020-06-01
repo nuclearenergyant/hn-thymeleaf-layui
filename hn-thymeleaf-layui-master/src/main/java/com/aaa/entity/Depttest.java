@@ -6,10 +6,9 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class Dept {
-    private Integer deptId;
+public class Depttest {
 
-    private String deptName;
+    private Integer deptId;
 
     private String title;
 

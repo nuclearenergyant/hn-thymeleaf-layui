@@ -1,6 +1,7 @@
 package com.aaa.dao;
 
 import com.aaa.entity.Dept;
+import com.aaa.entity.Depttest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,7 +22,11 @@ public interface DeptMapper {
     int updateByPrimaryKeySelective(Dept record);
 
     int updateByPrimaryKey(Dept record);
+
     List<Dept> selectAllDept();
+
+    List<Depttest> selectAllDept02();
+
     int delUserByID( @Param("ids") List<String> ids);
 
     /*搜索栏搜索*/

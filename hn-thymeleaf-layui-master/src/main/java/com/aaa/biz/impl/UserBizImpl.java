@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ import java.util.UUID;
 public class UserBizImpl implements UserBiz{
         @Autowired
         private UserMapper userMapper;
+
         @Override
         public PageInfo<User> selectAllUser(int page, int limit) {
             //开始分页,第一个参数是当前第几页，第二个参数是一页显示多少行
@@ -54,6 +56,7 @@ public class UserBizImpl implements UserBiz{
             String encryption = ShiroUtil.encryptionBySalt(salt, message);
             record.setPassword(encryption);
             record.setSalt(salt);
+            record.setCreateTime(new Date());
             return userMapper.insertSelective(record);
         }
 

@@ -25,6 +25,9 @@
   <select id="selectAllDept" resultMap="BaseResultMap">
     select * from tbl_dept where del_flag=0
   </select>
+  <select id="selectAllDept02" resultMap="BaseResultMap">
+    select * from tbl_dept where del_flag=0
+  </select>
 
   <!--搜索栏搜索-->
     <select id="mysearch" resultMap="BaseResultMap">

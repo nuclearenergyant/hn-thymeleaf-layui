@@ -3,6 +3,7 @@ package com.aaa.biz.impl;
 import com.aaa.biz.DeptBiz;
 import com.aaa.dao.DeptMapper;
 import com.aaa.entity.Dept;
+import com.aaa.entity.Depttest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +40,14 @@ public class DeptBizImpl implements DeptBiz {
     public List<Dept>selectAllDept(){
         return deptMapper.selectAllDept();
     }
+
+    @Override
+    public List<Depttest>selectAllDept02(){
+        return deptMapper.selectAllDept02();
+    }
     @Override
     public  int updateByPrimaryKeySelective(Dept record) {
+        record.setUpdateTime(new Date());
         return deptMapper.updateByPrimaryKeySelective(record);
     }
     @Override

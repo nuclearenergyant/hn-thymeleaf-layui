@@ -109,7 +109,14 @@
 
 </form>
 
-
+<form class="layui-form" action="" id="deptDeplayForm" style="display: none">
+    <div style="text-align:left;margin-top:5%;line-height:normal;margin-left:10px" >
+        部门名：<span id="dName"></span><br>
+        部门编号：<span id="dId"></span><br>
+        状态：<span id="dstatus"></span><br>
+        负责人：<span id="dcreateBy"></span><br>
+    </div>
+</form>
 
 </body>
 <script>
@@ -142,9 +149,10 @@
         ,cols: [
             [ //表头
                 {field: 'deptId', title: '部门编号', width:80, sort: true, fixed: 'left',checkbox: true}
+                ,{field: 'deptId', title: '部门编号', width:80, sort: true, fixed: 'left'}
                 ,{field: 'deptName', title: '部门名称', width:120, sort: true, fixed: 'left'}
-                ,{field: 'orderNum', title: '显示顺序', width:180}
-                ,{field: 'status', title: '状态', width:100}
+                ,{field: 'orderNum', title: '显示顺序', width:80}
+                ,{field: 'status', title: '状态', width:80}
                 ,{field: 'createTime', title: '创建时间', width:200}
                 ,{ title: '操作', width:200, toolbar: '#barDemo'}
             ]]
@@ -304,7 +312,19 @@
         var data = obj.data //获得当前行数据
             ,layEvent = obj.event; //获得 lay-event 对应的值
         if(layEvent === 'detail'){
-            layer.msg('查看操作');
+            $("#dName").html(data.deptName);
+            $("#dId").html(data.deptId);
+            $("#dcreateBy").html(data.createBy);
+            $("#dstatus").html(data.status);
+            layer.open(
+                {
+                    type: 1,
+                    content: $("#deptDeplayForm"),
+                    icon: 1,
+                    title:"详细信息",
+                    area: ['200px', '150px']
+                }
+            )
         } else if(layEvent === 'del'){
             layer.confirm('真的删除行么', function(index){
                 obj.del(); //删除对应行（tr）的DOM结构
